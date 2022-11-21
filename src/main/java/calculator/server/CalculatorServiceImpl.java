@@ -3,9 +3,6 @@ package calculator.server;
 import com.proto.calculator.*;
 import io.grpc.stub.StreamObserver;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServiceImplBase {
     @Override
     public void sum(SumRequest request, StreamObserver<SumResponse> responseObserver) {
@@ -30,12 +27,14 @@ public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServi
 
     @Override
     public StreamObserver<AvgRequest> avg(StreamObserver<AvgResponse> responseObserver) {
-        List<Integer> numbers = new ArrayList<>();
-
         return new StreamObserver<AvgRequest>() {
+            private int sum = 0;
+            private int size = 0;
+
             @Override
             public void onNext(AvgRequest request) {
-                numbers.add(request.getNumber());
+                sum += request.getNumber();
+                ++size;
             }
 
             @Override
@@ -45,11 +44,7 @@ public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServi
 
             @Override
             public void onCompleted() {
-                double sum = 0;
-                for (int number : numbers) {
-                    sum += number;
-                }
-                responseObserver.onNext(AvgResponse.newBuilder().setResult(sum / numbers.size()).build());
+                responseObserver.onNext(AvgResponse.newBuilder().setResult((double) sum / size).build());
                 responseObserver.onCompleted();
             }
         };
