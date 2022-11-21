@@ -50,6 +50,7 @@ public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServi
                     sum += number;
                 }
                 responseObserver.onNext(AvgResponse.newBuilder().setResult(sum / numbers.size()).build());
+                responseObserver.onCompleted();
             }
         };
     }
