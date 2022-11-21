@@ -1,6 +1,6 @@
 package calculator.server;
 
-import com.proto.sum.*;
+import com.proto.calculator.*;
 import io.grpc.stub.StreamObserver;
 
 public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServiceImplBase {
@@ -23,5 +23,30 @@ public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServi
             }
         }
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public StreamObserver<AvgRequest> avg(StreamObserver<AvgResponse> responseObserver) {
+        return new StreamObserver<AvgRequest>() {
+            private int sum = 0;
+            private int size = 0;
+
+            @Override
+            public void onNext(AvgRequest request) {
+                sum += request.getNumber();
+                ++size;
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                responseObserver.onError(t);
+            }
+
+            @Override
+            public void onCompleted() {
+                responseObserver.onNext(AvgResponse.newBuilder().setResult((double) sum / size).build());
+                responseObserver.onCompleted();
+            }
+        };
     }
 }
