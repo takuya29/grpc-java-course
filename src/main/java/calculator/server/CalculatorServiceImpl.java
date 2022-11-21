@@ -49,4 +49,27 @@ public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServi
             }
         };
     }
+
+    @Override
+    public StreamObserver<MaxRequest> max(StreamObserver<MaxResponse> responseObserver) {
+        return new StreamObserver<MaxRequest>() {
+            private int max = Integer.MIN_VALUE;
+
+            @Override
+            public void onNext(MaxRequest request) {
+                max = Math.max(max, request.getNumber());
+                responseObserver.onNext(MaxResponse.newBuilder().setResult(max).build());
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                responseObserver.onError(t);
+            }
+
+            @Override
+            public void onCompleted() {
+                responseObserver.onCompleted();
+            }
+        };
+    }
 }
