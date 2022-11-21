@@ -1,11 +1,11 @@
-package sum.server;
+package calculator.server;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
 import java.io.IOException;
 
-public class SumServer {
+public class CalculatorServer {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         int port = 50052;
