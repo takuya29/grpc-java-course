@@ -12,7 +12,7 @@ public class CalculatorServer {
 
         Server server = ServerBuilder
                 .forPort(port)
-                .addService(new SumServiceImpl())
+                .addService(new CalculatorServiceImpl())
                 .build();
         server.start();
 
