@@ -1,4 +1,4 @@
-package sum.server;
+package calculator.server;
 
 import com.proto.sum.SumRequest;
 import com.proto.sum.SumResponse;
