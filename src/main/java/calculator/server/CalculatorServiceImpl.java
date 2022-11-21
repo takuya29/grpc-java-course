@@ -1,6 +1,6 @@
 package calculator.server;
 
-import com.proto.sum.*;
+import com.proto.calculator.*;
 import io.grpc.stub.StreamObserver;
 
 public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServiceImplBase {

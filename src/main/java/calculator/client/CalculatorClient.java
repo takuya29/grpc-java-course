@@ -1,9 +1,9 @@
 package calculator.client;
 
-import com.proto.sum.CalculatorServiceGrpc;
-import com.proto.sum.PrimesRequest;
-import com.proto.sum.SumRequest;
-import com.proto.sum.SumResponse;
+import com.proto.calculator.CalculatorServiceGrpc;
+import com.proto.calculator.PrimesRequest;
+import com.proto.calculator.SumRequest;
+import com.proto.calculator.SumResponse;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
