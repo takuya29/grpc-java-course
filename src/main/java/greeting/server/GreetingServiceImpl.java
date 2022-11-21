@@ -29,7 +29,7 @@ public class GreetingServiceImpl extends GreetingServiceGrpc.GreetingServiceImpl
         return new StreamObserver<GreetingRequest>() {
             @Override
             public void onNext(GreetingRequest request) {
-                sb.append("hello");
+                sb.append("Hello ");
                 sb.append(request.getFirstName());
                 sb.append("!\n");
             }
