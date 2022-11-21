@@ -1,16 +1,25 @@
 package calculator.client;
 
+import com.proto.sum.CalculatorServiceGrpc;
+import com.proto.sum.PrimesRequest;
 import com.proto.sum.SumRequest;
 import com.proto.sum.SumResponse;
-import com.proto.sum.SumServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
 public class CalculatorClient {
     private static void doSum(ManagedChannel channel) {
-        SumServiceGrpc.SumServiceBlockingStub stub = SumServiceGrpc.newBlockingStub(channel);
+        CalculatorServiceGrpc.CalculatorServiceBlockingStub stub = CalculatorServiceGrpc.newBlockingStub(channel);
         SumResponse response = stub.sum(SumRequest.newBuilder().setFirst(1).setSecond(5).build());
         System.out.println("Result: " + response.getResult());
+    }
+
+    private static void doPrimes(ManagedChannel channel) {
+        CalculatorServiceGrpc.CalculatorServiceBlockingStub stub = CalculatorServiceGrpc.newBlockingStub(channel);
+        stub.primes(PrimesRequest.newBuilder().setNumber(210).build()).forEachRemaining(
+                response -> System.out.println(response.getNumber())
+        );
+
     }
 
     public static void main(String[] args) {
@@ -28,6 +37,8 @@ public class CalculatorClient {
             case "sum":
                 doSum(channel);
                 break;
+            case "primes":
+                doPrimes(channel);
             default:
                 System.out.println("Keyword invalid: " + args[0]);
                 break;
