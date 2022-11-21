@@ -16,6 +16,17 @@ public class GreetingClient {
         System.out.println("Greeting: " + response.getResult());
     }
 
+    private static void doGreetManyTimes(ManagedChannel channel) {
+        System.out.println("Enter doGreetManyTimes");
+        GreetingServiceGrpc.GreetingServiceBlockingStub stub = GreetingServiceGrpc.newBlockingStub(channel);
+        stub.greetManyTimes(GreetingRequest.newBuilder().setFirstName("Takuya").build()).forEachRemaining(
+                response -> {
+                    System.out.println(response.getResult());
+                }
+        );
+
+    }
+
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Need one argument to work");
@@ -27,10 +38,12 @@ public class GreetingClient {
                 .usePlaintext()
                 .build();
 
-        // do something
         switch (args[0]) {
             case "greet":
                 doGreet(channel);
+                break;
+            case "greet_many_times":
+                doGreetManyTimes(channel);
                 break;
             default:
                 System.out.println("Keyword invalid: " + args[0]);
