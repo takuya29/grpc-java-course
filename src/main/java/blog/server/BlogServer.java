@@ -11,7 +11,7 @@ public class BlogServer {
     public static void main(String[] args) throws IOException, InterruptedException {
         int port = 50051;
 
-        MongoClient client = MongoClients.create("mongodb://root:root@mongo:27017/");
+        MongoClient client = MongoClients.create("mongodb://root:root@localhost:27017/");
 
         Server server = ServerBuilder
                 .forPort(port)
